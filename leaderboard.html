@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard | Abandoned Tools in Space</title>
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+  <header>
+    <h1>One way to space: The Story of Space Exploration and Abandoned Tools in space</h1>
+    <nav aria-label="Main">
+      <a href="index.html#stories">Stories</a>
+      <a href="solar-system.html">Solar system</a>
+      <a href="mission-log.html">Mission log</a>
+    </nav>
+  </header>
+  <main class="leaderboard-page">
+    <p class="meta">SPACE CHALLENGE</p>
+    <h2>🏆 Explorer Leaderboard</h2>
+    <p class="section-note">Every correct answer earns 10 points. Read the stories, complete the five-question quizzes, and climb the rankings.</p>
+    <section class="leaderboard-card">
+      <div class="leaderboard-heading">
+        <div><h3>Top explorers</h3><p id="leaderboard-count">No players yet</p></div>
+        <span class="leaderboard-trophy">🏆</span>
+      </div>
+      <ol id="leaderboard-list" class="leaderboard-list"></ol>
+      <p id="leaderboard-empty" class="empty-note">No scores yet. Complete a story quiz to appear here!</p>
+    </section>
+    <section class="leaderboard-card player-settings">
+      <h3>Set your player name</h3>
+      <p>Your name is stored in this browser with your quiz progress.</p>
+      <form id="player-form" class="quiz-name-form">
+        <input id="player-name" type="text" maxlength="20" placeholder="Player name" aria-label="Player name" required>
+        <button class="quiz-btn" type="submit">Save name</button>
+      </form>
+      <p id="player-status" class="quiz-progress" aria-live="polite"></p>
+    </section>
+    <p class="leaderboard-note"><strong>Note:</strong> This version stores scores in this browser only. A shared leaderboard across different devices and visitors needs an online database such as Firebase or Supabase.</p>
+    <a class="back-link" href="index.html#stories">← Back to stories</a>
+  </main>
+  <footer><p>&copy; 2026 My Website</p></footer>
+  <script src="leaderboard.js"></script>
+</body>
+</html>

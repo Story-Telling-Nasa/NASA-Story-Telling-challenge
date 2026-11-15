@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Story animations</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:#070b1f;color:#f4f1ff;font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif}
+body{padding:calc(12px + env(safe-area-inset-top,0px)) 12px 20px;max-width:860px;margin:auto}
+h1{font-size:22px;margin:4px 0 10px;color:#ffb454}
+#tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+#tabs button{font:inherit;font-size:14px;padding:7px 12px;border-radius:20px;border:2px solid #3a3f6b;background:#10163a;color:#cfd3ff;cursor:pointer}
+#tabs button.on{background:#ff7a3d;border-color:#ff7a3d;color:#fff}
+#screen{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:14px;background:#050818;border:3px solid #2a2f5c}
+.scene{position:absolute;inset:0}
+.st{position:absolute;background:#fff;border-radius:50%;width:2px;height:2px;animation:tw 2s infinite alternate}
+@keyframes tw{from{opacity:.2}to{opacity:1}}
+.e{position:absolute;line-height:1;font-size:clamp(28px,8vw,64px)}
+.ground{position:absolute;left:0;right:0;bottom:0;height:30%}
+#cap{position:absolute;left:0;right:0;bottom:0;padding:10px 14px;background:linear-gradient(transparent,rgba(0,0,0,.85));font-size:clamp(13px,3.4vw,19px);line-height:1.35;text-align:center;min-height:56px;transition:opacity .4s}
+#bar{height:5px;background:#1a1f45;border-radius:3px;margin:8px 0}
+#bar i{display:block;height:100%;width:0;background:#ff7a3d;border-radius:3px}
+#ctrl{display:flex;gap:10px;align-items:center}
+#ctrl button{font:inherit;font-weight:700;font-size:17px;padding:9px 24px;border:0;border-radius:24px;background:#ff7a3d;color:#fff;cursor:pointer}
+#ctrl a{color:#9fc4ff;margin-left:auto;font-size:14px}
+button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+/* scene 1: Opportunity */
+.s1 .ground{background:linear-gradient(#b5502a,#6e2a14)}
+.s1 .sky{position:absolute;inset:0;background:linear-gradient(#2b1020,#c4633a)}
+.s1 .rov{left:-12%;bottom:24%;animation:drive 9s ease-out forwards}
+@keyframes drive{to{left:42%}}
+.s1 .dust{position:absolute;inset:0;background:#5a2a14;opacity:0;animation:dustS 15s forwards}
+@keyframes dustS{0%,45%{opacity:0}65%{opacity:.85}100%{opacity:.7}}
+.s1 .dim{position:absolute;inset:0;background:#000;opacity:0;animation:dimS 15s forwards}
+@keyframes dimS{0%,70%{opacity:0}100%{opacity:.7}}
+.s1 .earth{right:8%;top:8%;opacity:0;animation:fi 2s 10s forwards}
+@keyframes fi{to{opacity:1}}
+/* scene 2: Able 1 */
+.s2 .moon{right:10%;top:8%;font-size:clamp(50px,14vw,110px)}
+.s2 .ground{background:#1d2250}
+.s2 .rk{left:46%;bottom:20%;animation:up 7s 1s ease-in forwards}
+@keyframes up{0%{transform:translate(0,0)}20%{transform:translate(2px,-10px)}40%{transform:translate(-2px,-40px)}70%{transform:translate(3px,-120px) rotate(10deg)}100%{transform:translate(20px,-190px) rotate(40deg);opacity:0}}
+.s2 .boom{left:47%;top:14%;opacity:0;animation:bm 1.4s 6.6s forwards;font-size:clamp(40px,12vw,90px)}
+@keyframes bm{0%{opacity:0;transform:scale(.3)}40%{opacity:1;transform:scale(1.3)}100%{opacity:.0;transform:scale(1.8)}}
+.s2 .flame{left:46.5%;bottom:14%;animation:fl .15s infinite alternate}
+@keyframes fl{to{transform:scaleY(1.5)}}
+/* scene 3: Reflector */
+.s3 .ea{left:6%;bottom:10%;font-size:clamp(50px,14vw,110px)}
+.s3 .mo{right:8%;top:10%;font-size:clamp(50px,14vw,110px)}
+.s3 .rf{right:12%;top:50%;font-size:clamp(20px,5vw,36px);animation:gl 1.2s infinite alternate}
+@keyframes gl{to{filter:drop-shadow(0 0 12px #7dff9b)}}
+.s3 .beam{position:absolute;left:20%;bottom:25%;width:66%;height:4px;background:#7dff9b;box-shadow:0 0 12px #7dff9b;transform-origin:left center;transform:rotate(-21deg) scaleX(0);animation:bz 3s 2s infinite}
+@keyframes bz{0%{transform:rotate(-21deg) scaleX(0);opacity:1}45%{transform:rotate(-21deg) scaleX(1)}55%{transform:rotate(-21deg) scaleX(1);opacity:1}100%{transform:rotate(-21deg) scaleX(1);opacity:0}}
+/* scene 4: Plaque */
+.s4 .ground{background:linear-gradient(#8a8a96,#4a4a58);height:36%}
+.s4 .pl{left:50%;bottom:26%;transform:translateX(-50%);width:34%;aspect-ratio:3/2;background:linear-gradient(135deg,#d8d2bd,#9c9680);border-radius:6px;box-shadow:0 0 0 rgba(255,230,150,0);animation:pg 2.5s infinite alternate;display:flex;align-items:center;justify-content:center;text-align:center;color:#3a3420;font-size:clamp(9px,2.4vw,15px);line-height:1.5;padding:6px}
+@keyframes pg{to{box-shadow:0 0 40px rgba(255,230,150,.9)}}
+.s4 .sp{animation:fl2 3s infinite;opacity:0}
+@keyframes fl2{50%{opacity:1;transform:translateY(-14px)}}
+.s4 .vr{left:6%;top:8%}
+/* scene 5: Footprints */
+.s5 .ground{background:linear-gradient(#8a8a96,#4a4a58);height:36%}
+.s5 .dash{left:-12%;bottom:30%;animation:dd 5s linear forwards}
+@keyframes dd{to{left:62%}}
+.s5 .fp{bottom:20%;opacity:0;animation:fi 1s forwards;font-size:clamp(22px,6vw,44px)}
+.s5 .ex{left:68%;bottom:50%;font-size:clamp(30px,8vw,60px);opacity:0;animation:fi .3s 5s forwards,jp .5s 5s infinite alternate}
+@keyframes jp{to{transform:translateY(-10px)}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
+.a{width:1em;height:1em;display:block}</style>
+</head>
+<body>
+<h1>Watch the stories</h1>
+<div id="tabs"></div>
+<div id="screen"><div id="stage"></div><div id="cap"></div></div>
+<div id="bar"><i id="fill"></i></div>
+<div id="ctrl"><button id="play">Play</button><a href="index.html#stories">Back to the stories</a></div>
+<script>
+var ART={rover:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 100 80'><polygon points='6,36 94,36 84,22 16,22' fill='#e2b13a' stroke='#7a5a10' stroke-width='2'/><path d='M30 22 L28 36 M50 22 V36 M70 22 L72 36' stroke='#7a5a10' stroke-width='1.5'/><rect x='26' y='36' width='48' height='16' rx='3' fill='#c9ccd8' stroke='#6b6f85' stroke-width='2'/><rect x='62' y='8' width='3' height='15' fill='#8a8fa8'/><rect x='55' y='3' width='17' height='8' rx='2' fill='#2c3050'/><circle cx='60' cy='7' r='2.5' fill='#7fd6ff'/><circle cx='68' cy='7' r='2.5' fill='#7fd6ff'/><path d='M22 62 L50 52 L78 62' stroke='#6b6f85' stroke-width='3' fill='none'/><g fill='#2a2d45' stroke='#9aa0c0' stroke-width='2'><circle cx='20' cy='64' r='10'/><circle cx='50' cy='66' r='9'/><circle cx='80' cy='64' r='10'/></g><g fill='#9aa0c0'><circle cx='20' cy='64' r='3'/><circle cx='50' cy='66' r='3'/><circle cx='80' cy='64' r='3'/></g></svg>`,rocket:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 60 100'><path d='M30 4 C44 20 46 44 42 72 L18 72 C14 44 16 20 30 4Z' fill='#f2f4ff' stroke='#8c92b8' stroke-width='2'/><path d='M30 4 C36 11 40 18 41 27 L19 27 C20 18 24 11 30 4Z' fill='#e5483b'/><circle cx='30' cy='44' r='8' fill='#4aa8ff' stroke='#556' stroke-width='2'/><circle cx='27' cy='41' r='2.5' fill='#cfeaff'/><path d='M18 58 L5 86 L19 76Z M42 58 L55 86 L41 76Z' fill='#e5483b' stroke='#9a2a20' stroke-width='1.5'/><rect x='22' y='72' width='16' height='5' fill='#6b6f85'/></svg>`,earth:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='#2a6fd6'/><path d='M22 30 C30 18 46 20 44 32 C42 42 30 46 26 56 C18 50 14 38 22 30Z M58 56 C70 50 84 58 80 70 C76 82 62 84 58 74 C54 68 54 60 58 56Z M56 18 C66 14 78 22 72 30 C66 34 56 28 56 18Z' fill='#4fae5a'/><ellipse cx='36' cy='28' rx='14' ry='6' fill='#fff' opacity='.35'/><circle cx='50' cy='50' r='46' fill='none' stroke='#8fc1ff' stroke-width='3'/></svg>`,moon:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='#dcd8cc'/><g fill='#b8b3a4'><circle cx='34' cy='34' r='10'/><circle cx='64' cy='58' r='13'/><circle cx='40' cy='70' r='6'/><circle cx='70' cy='28' r='5'/></g><circle cx='50' cy='50' r='46' fill='none' stroke='#f3f0e4' stroke-width='3'/></svg>`,robot:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 100 100'><line x1='50' y1='8' x2='50' y2='22' stroke='#9aa0c0' stroke-width='3'/><circle cx='50' cy='8' r='4' fill='#ff7a3d'/><rect x='28' y='22' width='44' height='30' rx='10' fill='#dfe3f5' stroke='#6b6f85' stroke-width='3'/><rect x='34' y='30' width='32' height='14' rx='7' fill='#1b1f45'/><circle cx='43' cy='37' r='4' fill='#7dff9b'/><circle cx='57' cy='37' r='4' fill='#7dff9b'/><rect x='34' y='54' width='32' height='18' rx='5' fill='#c9ccd8' stroke='#6b6f85' stroke-width='3'/><path d='M34 60 L18 72 M66 60 L82 72' stroke='#9aa0c0' stroke-width='4' stroke-linecap='round'/><g fill='#2a2d45' stroke='#9aa0c0' stroke-width='2'><circle cx='36' cy='84' r='11'/><circle cx='64' cy='84' r='11'/></g></svg>`,reflector:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 100 100'><path d='M30 90 L50 55 L70 90' stroke='#8a8fa8' stroke-width='4' fill='none'/><rect x='20' y='14' width='60' height='44' rx='4' fill='#aab0cc' stroke='#5b6082' stroke-width='3'/><g fill='#e8f4ff' stroke='#5b6082' stroke-width='1.5'><circle cx='34' cy='28' r='7'/><circle cx='50' cy='28' r='7'/><circle cx='66' cy='28' r='7'/><circle cx='34' cy='44' r='7'/><circle cx='50' cy='44' r='7'/><circle cx='66' cy='44' r='7'/></g></svg>`,sign:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 100 100'><rect x='47' y='50' width='6' height='46' fill='#8a8fa8'/><rect x='14' y='12' width='72' height='46' rx='5' fill='#e0c779' stroke='#7a6420' stroke-width='3'/><g stroke='#7a6420' stroke-width='3' stroke-linecap='round'><line x1='26' y1='26' x2='74' y2='26'/><line x1='26' y1='36' x2='74' y2='36'/><line x1='26' y1='46' x2='58' y2='46'/></g></svg>`,foot:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 100 100'><g fill='#c8c5d6' stroke='#5b5f80' stroke-width='3'><path d='M34 14 C54 8 66 24 62 44 C60 58 40 60 34 48 C28 36 26 20 34 14Z'/><path d='M36 66 C48 62 62 68 60 80 C58 92 40 94 36 84 C34 78 32 70 36 66Z'/></g><g stroke='#5b5f80' stroke-width='3'><line x1='40' y1='26' x2='56' y2='24'/><line x1='40' y1='36' x2='57' y2='34'/></g></svg>`,sat:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 100 100'><rect x='4' y='38' width='30' height='24' fill='#3a78d8' stroke='#9fc4ff' stroke-width='2'/><rect x='66' y='38' width='30' height='24' fill='#3a78d8' stroke='#9fc4ff' stroke-width='2'/><rect x='36' y='30' width='28' height='40' rx='5' fill='#dfe3f5' stroke='#6b6f85' stroke-width='3'/><circle cx='50' cy='50' r='7' fill='#ff7a3d'/><line x1='50' y1='30' x2='50' y2='14' stroke='#9aa0c0' stroke-width='3'/><circle cx='50' cy='12' r='4' fill='#7dff9b'/></svg>`,boom:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 100 100'><polygon points='50,2 61,32 94,22 72,48 98,70 64,70 58,98 46,72 14,90 28,58 4,40 38,36' fill='#ffb454' stroke='#ff5a2d' stroke-width='3'/><polygon points='50,24 57,42 76,38 62,52 74,66 54,62 50,78 44,62 26,70 38,52 24,40 44,42' fill='#fff3a0'/></svg>`,flame:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 30 50'><path d='M15 2 C26 18 28 32 22 42 C18 48 12 48 8 42 C2 32 4 18 15 2Z' fill='#ff7a3d'/><path d='M15 18 C21 28 22 36 18 42 C16 44 14 44 12 42 C8 36 10 28 15 18Z' fill='#ffe36b'/></svg>`,spark:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 100 100'><path d='M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4Z' fill='#ffe9a0' stroke='#ffb454' stroke-width='3'/></svg>`,alert:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='#ff4d4d' stroke='#fff' stroke-width='5'/><rect x='44' y='22' width='12' height='34' rx='5' fill='#fff'/><circle cx='50' cy='72' r='7' fill='#fff'/></svg>`,vr:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 100 100'><path d='M8 44 C8 30 20 24 30 24 L70 24 C80 24 92 30 92 44 L92 56 C92 70 80 76 70 76 L60 76 L54 64 L46 64 L40 76 L30 76 C20 76 8 70 8 56Z' fill='#e9ecff' stroke='#6b6f85' stroke-width='3'/><rect x='16' y='34' width='68' height='30' rx='12' fill='#1b1f45'/><circle cx='36' cy='49' r='7' fill='#7dd6ff'/><circle cx='64' cy='49' r='7' fill='#7dd6ff'/></svg>`,rock:`<svg xmlns='http://www.w3.org/2000/svg' class='a' width='100' height='100' viewBox='0 0 100 100'><path d='M8 86 L18 48 L40 28 L66 34 L88 58 L92 86Z' fill='#6e4630' stroke='#3d2418' stroke-width='3'/><path d='M40 28 L44 52 L66 34 M18 48 L44 52 L56 86' stroke='#3d2418' stroke-width='2' fill='none'/><path d='M22 52 L40 32 L44 48Z' fill='#8d5d40'/></svg>`};(function(){
+var STARS=function(n){var h="";for(var i=0;i<n;i++)h+='<div class="st" style="left:'+(Math.random()*100)+'%;top:'+(Math.random()*70)+'%;animation-delay:'+(Math.random()*2)+'s"></div>';return h};
+/* Replace the lines below with the real text of each story if you like. */
+var S=[
+{t:"Opportunity",d:15,
+ c:["One quiet day on Mars, a little robot sat alone.","Red sand stretched as far as the eye could see.","Opportunity rolled on, far longer than anyone planned.","Then a giant dust storm covered the sky.","The sun went dark, and the little robot went silent.","It never gave up. It is still there, a monument to curiosity."],
+ h:function(){return '<div class="scene s1"><div class="sky"></div>'+STARS(25)+'<div class="e earth">'+ART.earth+'</div><div class="ground"></div><div class="e rov">'+ART.robot+'</div><div class="dust"></div><div class="dim"></div></div>'}},
+{t:"Able 1",d:15,
+ c:["Do you think space is always quiet and beautiful?","I am Able 1, born in 1958, dreaming of the Moon.","Three, two, one... liftoff!","I climbed higher and higher...","But my rocket failed. My dream never came true.","I was the first, and I am not forgotten."],
+ h:function(){return '<div class="scene s2" style="background:linear-gradient(#050818,#1b1f4d)">'+STARS(40)+'<div class="e moon">'+ART.moon+'</div><div class="ground"></div><div class="e rk">'+ART.rocket+'</div><div class="e flame">'+ART.flame+'</div><div class="e boom">'+ART.boom+'</div></div>'}},
+{t:"Laser Reflector",d:15,
+ c:["It was a night on Earth. The Moon glowed above the city.","In 1969, Apollo 11 left a small machine on the Moon.","It has no battery and no engine. Just mirrors.","Scientists on Earth fire a laser at it.","The light bounces back and tells us the distance.","A little machine connecting two worlds."],
+ h:function(){return '<div class="scene s3" style="background:linear-gradient(#050818,#141a45)">'+STARS(40)+'<div class="e ea">'+ART.earth+'</div><div class="e mo">'+ART.moon+'</div><div class="e rf">'+ART.reflector+'</div><div class="beam"></div></div>'}},
+{t:"Moon plaque",d:15,
+ c:["The year is 2050. Emma explores the Moon in a school VR mission.","She dreams of becoming an astronaut.","Then she spots something shining in the dust.","A plaque with names of astronauts who gave everything.","The Moon keeps their memory safe.","Forgotten heroes, remembered at last."],
+ h:function(){return '<div class="scene s4" style="background:linear-gradient(#050818,#10153a)">'+STARS(40)+'<div class="e vr">'+ART.vr+'</div><div class="ground"></div><div class="pl">IN MEMORY<br>OF THOSE WHO<br>REACHED FOR THE STARS</div><div class="e sp" style="left:30%;bottom:40%">'+ART.spark+'</div><div class="e sp" style="left:64%;bottom:46%;animation-delay:1s">'+ART.spark+'</div></div>'}},
+{t:"Footprints",d:15,
+ c:["Year 2075. Somewhere on the Moon...","Warning! Unknown tracks detected!","DASH, a small exploration robot, stops moving.","Footprints, left behind in 1969.","No wind and no rain to wipe them away.","They may stay for millions of years."],
+ h:function(){var f="";for(var i=0;i<6;i++)f+='<div class="e fp" style="left:'+(14+i*11)+'%;animation-delay:'+(6+i*1.3)+'s">'+ART.foot+'</div>';return '<div class="scene s5" style="background:linear-gradient(#050818,#10153a)">'+STARS(40)+'<div class="ground"></div>'+f+'<div class="e dash">'+ART.robot+'</div><div class="e ex">'+ART.alert+'</div></div>'}}
+];
+var cur=0,timers=[],raf=0,t0=0,stage=document.getElementById("stage"),cap=document.getElementById("cap"),fill=document.getElementById("fill"),play=document.getElementById("play"),tabs=document.getElementById("tabs");
+S.forEach(function(s,i){var b=document.createElement("button");b.textContent=s.t;b.onclick=function(){cur=i;run()};tabs.appendChild(b)});
+function stop(){timers.forEach(clearTimeout);timers=[];cancelAnimationFrame(raf)}
+function run(){
+  stop();var s=S[cur];
+  Array.prototype.forEach.call(tabs.children,function(b,i){b.className=i==cur?"on":""});
+  stage.innerHTML=s.h();var n=s.c.length,step=s.d*1000/n;
+  s.c.forEach(function(line,i){timers.push(setTimeout(function(){cap.style.opacity=0;setTimeout(function(){cap.textContent=line;cap.style.opacity=1},200)},i*step))});
+  timers.push(setTimeout(function(){play.textContent="Replay";fill.style.width="100%"},s.d*1000));
+  t0=performance.now();(function f(t){var p=Math.min((t-t0)/(s.d*1000),1);fill.style.width=p*100+"%";if(p<1)raf=requestAnimationFrame(f)})(t0);
+  play.textContent="Restart"
+}
+play.onclick=run;
+run();
+})();
+</script>
+</body>
+</html>

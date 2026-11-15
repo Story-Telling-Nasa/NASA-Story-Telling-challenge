@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission log | Abandoned Tools in Space</title>
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+  <header>
+    <h1>One way to space: The Story of Space Exploration and Abandoned Tools in space</h1>
+    <nav aria-label="Main">
+      <a href="index.html#stories">Stories</a>
+      <a href="solar-system.html">Solar system</a>
+      <a href="leaderboard.html">Leaderboard</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Mission log</h2>
+    <p class="section-note">Filter the missions, then select one to see what happened and what it left behind.</p>
+    <div class="filters" id="filters" role="group" aria-label="Filter by place"></div>
+    <div class="explorer two">
+      <ol class="timeline" id="timeline"></ol>
+      <aside class="panel" id="info" aria-live="polite"></aside>
+    </div>
+  </main>
+  <footer><p>&copy; 2026 My Website</p></footer>
+  <script src="script.js"></script>
+  <script>
+const M=[
+{y:1958,n:'Able 1 (Pioneer 0)',w:'Moon',t:'Built to orbit the Moon. Its rocket failed about 73 seconds after launch on 17 August 1958.',l:'It was destroyed in the failure, so it never reached space.',u:'story-2.html'},
+{y:1969,n:'Apollo 11',w:'Moon',t:'In July 1969 the first people walked on the Moon.',l:'The lower part of the lunar module and some equipment stay at Tranquility Base.'},
+{y:2004,n:'Opportunity',w:'Mars',t:'A Mars rover that was planned to work for three months but kept going for almost fifteen years.',l:'It sits on Mars where it stopped after a huge dust storm in 2018.',u:'story-1.html'},
+{y:2021,n:'Ingenuity',w:'Mars',t:'A small helicopter that made the first powered flight on another planet, on 19 April 2021.',l:'Its mission ended in January 2024, and it remains on Mars.'}];
+const places=['All',...new Set(M.map(m=>m.w))],fil=document.getElementById('filters'),tl=document.getElementById('timeline'),info=document.getElementById('info');
+let cur='All';
+function show(m){
+  [...tl.querySelectorAll('button')].forEach(b=>b.setAttribute('aria-current',b.dataset.n===m.n));
+  info.innerHTML='<h3>'+m.n+'</h3><dl><dt>Year</dt><dd>'+m.y+'</dd><dt>Place</dt><dd>'+m.w+'</dd></dl><p>'+m.t+'</p><p><strong>Left behind:</strong> '+m.l+'</p>'+(m.u?'<p><a href="'+m.u+'">Read the story</a></p>':'');
+}
+function render(){
+  tl.innerHTML='';
+  const items=M.filter(m=>cur==='All'||m.w===cur);
+  items.forEach(m=>{const li=document.createElement('li'),b=document.createElement('button');
+    b.type='button';b.className='choice';b.dataset.n=m.n;b.innerHTML='<span class="year">'+m.y+'</span>'+m.n+'<small>'+m.w+'</small>';
+    b.addEventListener('click',()=>show(m));li.appendChild(b);tl.appendChild(li)});
+  show(items[0]);
+  [...fil.children].forEach(b=>b.setAttribute('aria-pressed',b.textContent===cur));
+}
+places.forEach(p=>{const b=document.createElement('button');b.type='button';b.className='pill';b.textContent=p;b.addEventListener('click',()=>{cur=p;render()});fil.appendChild(b)});
+render();
+  </script>
+</body>
+</html>
